@@ -1,3 +1,0 @@
-/home/nik/Desktop/linux_build_system/build/CMakeFiles/linux_build_system.dir
-/home/nik/Desktop/linux_build_system/build/CMakeFiles/edit_cache.dir
-/home/nik/Desktop/linux_build_system/build/CMakeFiles/rebuild_cache.dir

@@ -15,7 +15,7 @@ BuildSystem::BuildSystem(const std::string& sourceDir)
     
 void BuildSystem::build() {
     ipc::SocketClient client("/tmp/build_socket");
-    client.send("Build started");
+    client.sendMessage("Build started");
     logger.log("Build started");
     
     std::mutex mtx;
@@ -29,7 +29,7 @@ void BuildSystem::build() {
         if (!needsRebuild(file)) continue;
 
         threads.emplace_back([&, file]() {
-            client.send("Compiling: " + file);
+            client.sendMessage("Compiling: " + file);
             logger.log("Compiling: " + file); 
             compileFile(file);
 
@@ -44,12 +44,12 @@ void BuildSystem::build() {
         if (t.joinable()) t.join();
     }
     
-    client.send("Linking files");
+    client.sendMessage("Linking files");
     logger.log("Linking started");
     
     linkObjects(objectFiles);
     
-    client.send("Build finished");
+    client.sendMessage("Build finished");
     logger.log("Build finished");
     
     saveCache();
