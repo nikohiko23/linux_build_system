@@ -9,7 +9,7 @@ class SocketClient {
 public:
     SocketClient(const char* socket_path);
     bool sendMessage(const std::string& message);
-
+    void send(const std::string& message);
 private:
     const char* socketPath;
 };

@@ -3,33 +3,59 @@
 #include <filesystem>
 #include <cstdlib>
 #include <fstream>
+#include "../../include/ipc/socket_client.hpp"
+#include <thread>
+#include <mutex>
+#include <vector>
 
 namespace fs = std::filesystem;
 
 BuildSystem::BuildSystem(const std::string& sourceDir)
-    : sourceDirectory(sourceDir) {}
+    : sourceDirectory(sourceDir), logger("logs/build.log") {}
     
 void BuildSystem::build() {
-    loadCache();
+    ipc::SocketClient client("/tmp/build_socket");
+    client.send("Build started");
+    logger.log("Build started");
     
+    std::mutex mtx;
     std::vector<std::string> cppFiles = getCppFiles();
     std::vector<std::string> objectFiles;
+    std::vector<std::thread> threads;
+    
+    loadCache();
     
     for (const auto& file : cppFiles) {
-        if (needsRebuild(file)) {
+        if (!needsRebuild(file)) continue;
+
+        threads.emplace_back([&, file]() {
+            client.send("Compiling: " + file);
+            logger.log("Compiling: " + file); 
             compileFile(file);
-            cache[file] = std::filesystem::last_write_time(file);
-        } else {
-            std::cout << "Skipping (cached): " << file << "\n";
-        }
-    
-        std::string obj = file.substr(0, file.find_last_of('.')) + ".o";
-        objectFiles.push_back(obj);
+
+            std::string obj = file.substr(0, file.find_last_of('.')) + ".o";
+
+            std::lock_guard<std::mutex> lock(mtx);
+            objectFiles.push_back(obj);
+        });
     }
     
+    for (auto& t : threads) {
+        if (t.joinable()) t.join();
+    }
+    
+    client.send("Linking files");
+    logger.log("Linking started");
+    
     linkObjects(objectFiles);
+    
+    client.send("Build finished");
+    logger.log("Build finished");
+    
     saveCache();
 }
+    
+    
     
 std::vector<std::string> BuildSystem::getCppFiles() {
     std::vector<std::string> files;
@@ -87,7 +113,7 @@ void BuildSystem::saveCache() {
 bool BuildSystem::needsRebuild(const std::string& filepath) {
     auto current_time = std::filesystem::last_write_time(filepath);
 
-    if (!cache.contains(filepath)) return true;
+    if (cache.find(filepath) == cache.end()) return true;
 
     return current_time != cache[filepath];
 }
