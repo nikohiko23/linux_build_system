@@ -1,0 +1,8 @@
+tests/tmp/test.cpp -4691225992
+src/modules/build_system.cpp -4691228591
+src/ipc/socket_server.cpp -4691360642
+src/main.cpp -4691227868
+src/modules/logger.cpp -4691298241
+src/ipc/socket_client.cpp -4691300085
+src/modules/example.cpp -4691364918
+src/ipc/ipc_server.cpp -4691227228

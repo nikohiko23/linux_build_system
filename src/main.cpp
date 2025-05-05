@@ -4,7 +4,7 @@
 int main() {
     std::cout << "Launching your own build system..." << std::endl;
 
-    BuildSystem builder("./.buildconfig");
+    BuildSystem builder("src");
     builder.build();
 
     return 0;

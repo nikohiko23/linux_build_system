@@ -1,20 +1,48 @@
-Sun May  4 21:10:31 2025
+Mon May  5 12:35:53 2025
 : Build started
-Sun May  4 21:10:31 2025
+Mon May  5 12:35:53 2025
+: Compiling: src/ipc/socket_client.cpp
+Mon May  5 12:35:53 2025
+: Compiling: src/ipc/socket_server.cpp
+Mon May  5 12:35:53 2025
+: Compiling: src/main.cpp
+Mon May  5 12:35:53 2025
+: Compiling: src/ipc/ipc_server.cpp
+Mon May  5 12:35:53 2025
+: Compiling: src/modules/logger.cpp
+Mon May  5 12:35:53 2025
+: Compiling: src/modules/build_system.cpp
+Mon May  5 12:35:53 2025
+: Compiling: src/modules/example.cpp
+Mon May  5 12:35:56 2025
 : Linking started
-Sun May  4 21:10:31 2025
+Mon May  5 12:35:56 2025
 : Build finished
-Sun May  4 21:26:34 2025
+Mon May  5 12:36:25 2025
 : Build started
-Sun May  4 21:26:34 2025
+Mon May  5 12:36:25 2025
+: Compiling: src/ipc/socket_client.cpp
+Mon May  5 12:36:25 2025
+: Compiling: src/ipc/ipc_server.cpp
+Mon May  5 12:36:25 2025
+: Compiling: src/main.cpp
+Mon May  5 12:36:25 2025
+: Compiling: src/modules/build_system.cpp
+Mon May  5 12:36:25 2025
+: Compiling: src/ipc/socket_server.cpp
+Mon May  5 12:36:25 2025
+: Compiling: src/modules/logger.cpp
+Mon May  5 12:36:25 2025
+: Compiling: src/modules/example.cpp
+Mon May  5 12:36:27 2025
 : Linking started
-Sun May  4 21:26:34 2025
+Mon May  5 12:36:27 2025
 : Build finished
-Sun May  4 21:33:03 2025
+Mon May  5 12:40:07 2025
 : Build started
-Sun May  4 21:33:03 2025
-: Compiling: ./.buildconfig/example.cpp
-Sun May  4 21:33:04 2025
+Mon May  5 12:40:07 2025
+: Compiling: tests/tmp/test.cpp
+Mon May  5 12:40:07 2025
 : Linking started
-Sun May  4 21:33:04 2025
+Mon May  5 12:40:07 2025
 : Build finished
