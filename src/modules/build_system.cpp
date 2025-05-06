@@ -12,7 +12,7 @@ namespace fs = std::filesystem;
 
 BuildSystem::BuildSystem(const std::string& sourceDir)
     : sourceDirectory(sourceDir), logger("logs/build.log") {}
-    
+// запускает процесс сборки: проверяет изменения, вызывает компиляцию и линковку    
 void BuildSystem::build() {
     ipc::SocketClient client("/tmp/build_socket");
     client.sendMessage("Build started");
@@ -56,7 +56,7 @@ void BuildSystem::build() {
 }
     
     
-    
+// ищет .cpp файлы в указанной директории    
 std::vector<std::string> BuildSystem::getCppFiles() {
     std::vector<std::string> files;
 
@@ -74,7 +74,7 @@ std::vector<std::string> BuildSystem::getCppFiles() {
     }
     return files;
 }
-
+// компилирует .cpp файл в .o с помощью g++
 void BuildSystem::compileFile(const std::string& filepath) {
     std::string objfile = filepath.substr(0, filepath.find_last_of('.')) + ".o";
     std::string command = "g++ -Iinclude -c " + filepath + " -o " + objfile;
@@ -85,7 +85,7 @@ void BuildSystem::compileFile(const std::string& filepath) {
     cache[filepath] = std::filesystem::last_write_time(filepath);
 }
 
-
+// линковка всех .o файлов в итоговый исполняемый файл
 void BuildSystem::linkObjects(const std::vector<std::string>& objects) {
     if (objects.empty()) {
         std::cerr << "No object files to link!" << std::endl;
@@ -121,7 +121,7 @@ void BuildSystem::saveCache() {
         outfile << path << " " << sctp.time_since_epoch().count() << "\n";
     }
 }
-
+// определяет, изменился ли исходный файл с прошлого запуска (по времени и кэшу)
 bool BuildSystem::needsRebuild(const std::string& filepath) {
     auto current_time = std::filesystem::last_write_time(filepath);
 

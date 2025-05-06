@@ -7,6 +7,7 @@
 
 namespace fs = std::filesystem;
 
+// проверяет, что getCppFiles() возвращает все .cpp файлы в директории
 TEST_CASE("Test getCppFiles returns correct list") {
     fs::create_directory("tests/tmp");
     std::ofstream("tests/tmp/test1.cpp");
@@ -19,7 +20,8 @@ TEST_CASE("Test getCppFiles returns correct list") {
 
     fs::remove_all("tests/tmp");
 }
-
+// проверяет, что файл пересобирается при первом запуске, 
+// а потом уже не требует пересборки, если не изменён
 TEST_CASE("Test needsRebuild returns true on first build") {
     fs::create_directory("tests/tmp");
     std::ofstream("tests/tmp/test.cpp") << "int main() { return 0; }";
